@@ -72,7 +72,7 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000 }: Props)
     };
 
     return (
-        <div className="flex justify-center bg-black text-white py-8 md:py-16 px-2 w-full">
+        <div className="flex justify-center bg-black text-white py-8 md:py-16 px-2 w-full overflow-hidden">
             <div className="flex flex-col items-center gap-4 mx-auto max-w-3xl">
                 <div className="flex flex-row gap-3">
                     {circles.map((circle, idx) => (
