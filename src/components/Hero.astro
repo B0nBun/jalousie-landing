@@ -1,0 +1,21 @@
+---
+import Down from './icons/Down.astro';
+---
+
+<div class="min-h-[70vh] lg:min-h-screen relative w-full overflow-hidden">
+    <!-- 'scale-[102%]' is needed to have defined edges -->
+    <div class="absolute min-h-full w-full scale-[102%] bg-cover bg-center blur-sm" style={{
+        backgroundImage: 'url("/hero.jpg")'
+    }}></div>
+    <div class="absolute min-h-full w-full bg-[#000] opacity-60"></div>
+
+    <!-- TODO: Animate arrow on hover -->
+    <div class="absolute z-10 text-white min-h-full w-full flex flex-col items-center justify-between xl:flex-row-reverse xl:px-28 2xl:px-52 pt-28 pb-16 xl:py-16">
+        <h1 class="text-4xl lg:text-6xl xl:text-7xl 2xl:text-8xl text-center xl:text-left xl:self-center">
+            Современные<br/>
+            Солнцезащитные<br/>
+            системы
+        </h1>
+        <a class="text-3xl lg:text-5xl xl:self-end flex gap-2 items-center" href="#contacts">Контакты <Down /></a>
+    </div>
+</div>

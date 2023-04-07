@@ -1,0 +1,13 @@
+---
+interface Props {
+    href: string;
+    label: string;
+};
+
+const { href, label } = Astro.props;
+---
+
+<div class="flex flex-row gap-2 items-center">
+    <slot/>
+    <a target="_blank" href={href} class="text-xl lg:text-2xl">{label}</a>
+</div>
