@@ -5,12 +5,27 @@ import Phone from "./icons/Phone.astro";
 import Telegram from "./icons/Telegram.astro";
 import WhatsApp from "./icons/WhatsApp.astro";
 
+// Modified function from: https://stackoverflow.com/a/8358141/19729620
+const formatPhone = (phone: string) => {
+    const cleaned = phone.replace(/\D/g, '');
+    const match = cleaned.match(/^(7|8)?(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+        var intlCode = (match[1] ? '+7 ' : '');
+        return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+    }
+    return null;
+}
+
+const telegramHandle = "KirGus330";
+const phone = "+79953301976";
+const whatsappPhone = phone;
+const email = "kirill003@yandex.ru";
 ---
 
 <!-- TODO: Color change on hover -->
 <div id="contacts" class="flex flex-col gap-3 items-start">
-    <ContactItem href="https://t.me/Kirill_464" label="@Kirill_464"><Telegram/></ContactItem>
-    <ContactItem href="tel:898212345678" label="8 982 1234 56 78"><Phone/></ContactItem>
-    <ContactItem href="tel:898287654321" label="8 982 8765 43 21"><WhatsApp/></ContactItem>
-    <ContactItem href="mailto:kirill003@yandex.ru" label="kirill003@yandex.ru"><Email/></ContactItem>
+    <ContactItem href={`https://t.me/${telegramHandle}`} label={`@${telegramHandle}`}><Telegram/></ContactItem>
+    <ContactItem href={`tel:${phone}`} label={formatPhone(phone)}><Phone/></ContactItem>
+    <ContactItem href={`https://wa.me/${whatsappPhone}`} label={formatPhone(whatsappPhone)}><WhatsApp/></ContactItem>
+    <ContactItem href={`mailto:${email}`} label={email}><Email/></ContactItem>
 </div>
