@@ -1,4 +1,4 @@
-import { MutableRef, useEffect, useMemo, useRef, useState } from "preact/hooks";
+import { MutableRef, useEffect, useMemo, useRef, useState, useCallback } from "preact/hooks";
 import Next from "./icons/Next";
 
 export type CarousellItem = {
@@ -19,7 +19,7 @@ const CarousellItemImage = ({ title, imageSource, className } : CarousellItem) =
         )
     }
     return (
-        <div className={`w-full h-52 md:h-96 bg-cover bg-center ${className}`} style={{backgroundImage: `url("${imageSource}")`}}></div>
+        <div role="img" aria-label={"Image with title: " + title} className={`w-full h-52 md:h-96 bg-cover bg-center ${className}`} style={{backgroundImage: `url("${imageSource}")`}}></div>
     )
 }
 
@@ -46,6 +46,57 @@ function useIntersectionObserver(element: MutableRef<HTMLDivElement | null>) {
     }, [element]);
     
     return intersected;
+}
+
+type Coordinates = { x: number, y: number }
+function useSwipe(callback: (deltaCoords: Coordinates) => void) {
+    const [startCoordinates, setStartCoordinates] = useState<Coordinates | null>(null);
+
+    const onMouseStart = useCallback((event: MouseEvent) => {
+        setStartCoordinates({
+            x: event.clientX,
+            y: event.clientY
+        });
+    }, [setStartCoordinates]);
+    
+    const onMouseEnd = useCallback((event: MouseEvent) => {
+        if (startCoordinates === null) return;
+        const x = event.clientX;
+        const y = event.clientY;
+        callback({
+            x: x - startCoordinates.x,
+            y: y - startCoordinates.y
+        });
+    }, [startCoordinates])
+    
+    const onTouchStart = useCallback((event: TouchEvent) => {
+        if (event.touches.length === 0) return;
+        const touch = event.touches[0]!;
+        setStartCoordinates({
+            x: touch.clientX,
+            y: touch.clientY
+        });
+    }, [setStartCoordinates])
+    
+    const onTouchEnd = useCallback((event: TouchEvent) => {
+        if (event.touches.length === 0) return;
+        const touch = event.touches[0]!;
+        if (startCoordinates === null) return;
+        const x = touch.clientX;
+        const y = touch.clientY;
+        callback({
+            x: x - startCoordinates.x,
+            y: y - startCoordinates.y
+        });
+    }, [startCoordinates]);
+    
+    return {
+        onMouseDown: onMouseStart,
+        onMouseUp: onMouseEnd,
+        onMouseLeave: onMouseEnd,
+        onTouchStart,
+        onTouchEnd,
+    };
 }
 
 export default function Carousell({ items, autoscrollIntervalMs = 3000, header = '' }: Props) {
@@ -114,6 +165,15 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
         setAnimationTimeouts([...animationTimeoutes, timer1]);
     };
 
+    const swipeHandlers = useSwipe(coords => {
+        if (coords.x > 50) {
+            switchItem(currentItemIdx - 1);
+        }
+        if (coords.x < -50) {
+            switchItem(currentItemIdx + 1);
+        }
+    });
+
     return (
         <div ref={carousellElement} className="flex justify-center bg-black text-white py-8 md:py-16 px-2 w-full overflow-hidden">
             {/* Preloading the next image */}
@@ -127,7 +187,7 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
                         <button key={idx} onClick={() => switchItem(idx)} className={`w-3 h-3 rounded-full bg-white ${circle.selected ? '' : 'opacity-50'} transition-opacity duration-200`}></button>
                     ))}
                 </div>
-                <div className="flex w-full flex-row items-center gap-2 md:gap-8">
+                <div {...swipeHandlers} className="flex w-full flex-row items-center gap-2 md:gap-8">
                     <button className="-scale-x-100 hover:-scale-x-[115%] hover:scale-y-[115%] transition-transform" onClick={() => switchItem(currentItemIdx - 1)}>
                         <Next />
                     </button>
