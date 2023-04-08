@@ -22,7 +22,6 @@ const whatsappPhone = phone;
 const email = "kirill003@yandex.ru";
 ---
 
-<!-- TODO: Color change on hover -->
 <div id="contacts" class="flex flex-col gap-3 items-start">
     <ContactItem href={`https://t.me/${telegramHandle}`} label={`@${telegramHandle}`}><Telegram/></ContactItem>
     <ContactItem href={`tel:${phone}`} label={formatPhone(phone) || ''}><Phone/></ContactItem>

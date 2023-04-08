@@ -7,7 +7,7 @@ interface Props {
 const { href, label } = Astro.props;
 ---
 
-<a target="_blank" href={href} class="flex flex-row gap-2 items-center">
+<a target="_blank" href={href} class="flex flex-row gap-2 items-center focus-visible:underline underline-offset-8">
     <slot/>
     <span class="text-xl lg:text-2xl">{label}</span>
 </a>
