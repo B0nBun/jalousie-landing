@@ -46,7 +46,16 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
             }
         }
         return withMaxLength;
-    }, []);
+    }, [items]);
+
+    const allImageSources = useMemo(() => {
+        const result: string[] = [];
+        for (const { imageSource } of items) {
+            if (!imageSource) continue;
+            result.push(imageSource);
+        }
+        return result;
+    }, [items])
     
     const mod = (currentItemIdx % items.length)
     const currentItem = items[mod < 0 ? items.length + mod : mod];
@@ -87,6 +96,10 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
 
     return (
         <div className="flex justify-center bg-black text-white py-8 md:py-16 px-2 w-full overflow-hidden">
+            {/* preloading the images */}
+            <div className="hidden">
+                {allImageSources.map(src => <img src={src}></img>)}
+            </div>
             <div className="flex flex-col items-center gap-4 mx-auto max-w-3xl">
                 <h2 class="text-center text-2xl lg:text-3xl font-light">{header}</h2>
                 <div className="flex flex-row gap-3">
