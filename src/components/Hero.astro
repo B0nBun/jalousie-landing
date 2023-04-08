@@ -1,15 +1,11 @@
 ---
-import fs from 'node:fs/promises';
 import Down from './icons/Down.astro';
-
-const heroFile = await fs.readFile("src/images/hero.jpg");
-const base64EncodedHero = heroFile.toString('base64');
 ---
 
 <div class="min-h-[70vh] md:min-h-[90vh] lg:min-h-screen relative w-full overflow-hidden">
     <!-- 'scale-[102%]' is needed to have defined edges -->
     <div class="absolute min-h-full w-full scale-[102%] bg-cover bg-center blur-sm" style={{
-        backgroundImage: `url("data:image/jpg;base64,${base64EncodedHero}")`
+        backgroundImage: `url("/hero.jpg")`
     }}></div>
     <div class="absolute min-h-full w-full bg-[#000] opacity-60"></div>
 
