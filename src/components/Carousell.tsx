@@ -30,7 +30,6 @@ type Props = {
     header?: string;
 }
 // TODO: Start the autoscrollTimeout only on the appearance
-// TODO: Preload all images
 export default function Carousell({ items, autoscrollIntervalMs = 3000, header = '' }: Props) {
     const [currentItemIdx, setCurrentItemIDx] = useState(0);
     const [animationClass, setAnimationClass] = useState('');
@@ -93,6 +92,7 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
 
     return (
         <div className="flex justify-center bg-black text-white py-8 md:py-16 px-2 w-full overflow-hidden">
+            {/* Preloading the next image */}
             <div className="hidden">
                 <img src={nextImageSource}></img>
             </div>
@@ -108,6 +108,7 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
                     <button className="-scale-x-100" onClick={() => switchItem(currentItemIdx - 1)}>
                         <Next />
                     </button>
+                    {/* TODO: Handle swiping */}
                     <CarousellItemImage onClick={() => switchItem(currentItemIdx + 1)} className={animationClass} key="carousell-item-image" {...currentItem} />
                     <button onClick={() => switchItem(currentItemIdx + 1)}>
                         <Next />

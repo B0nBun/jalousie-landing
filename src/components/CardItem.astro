@@ -1,12 +1,35 @@
 ---
 interface Props {
     label: string;
+    appearFrom: 'right' | 'left';
 }
 
-const { label } = Astro.props;
+const { label, appearFrom } = Astro.props;
 ---
 
-<div class="flex flex-col items-center gap-6">
+<script>
+    const options: IntersectionObserverInit = {
+        rootMargin: '0px',
+        threshold: 1.0
+    };
+    const callback: IntersectionObserverCallback = (entries, observer) => {
+        for (const entry of entries) {
+            if (!entry.isIntersecting) return;
+            const target = entry.target;
+            console.debug(target);
+            target.classList.add('opacity-100', '!translate-x-0');
+            observer.unobserve(target);
+        }
+    };
+    const observer = new IntersectionObserver(callback, options);
+
+    const elements = document.querySelectorAll('.card-item');
+    for (const element of elements) {
+        observer.observe(element);
+    }
+</script>
+
+<div class={`flex flex-col items-center gap-6 card-item opacity-0 ${appearFrom === 'right' ? 'translate-x-5' : '-translate-x-5'} transition-all duration-500`}>
     <slot/>
     <span set:html={label} class="text-xl lg:text-2xl text-center" />
 </div>
