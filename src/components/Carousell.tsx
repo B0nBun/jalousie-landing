@@ -29,12 +29,13 @@ type Props = {
     autoscrollIntervalMs?: number;
     header?: string;
 }
-// Start the autoscrollTimeout only on the appearance
+// TODO: Start the autoscrollTimeout only on the appearance
+// TODO: Preload all images
 export default function Carousell({ items, autoscrollIntervalMs = 3000, header = '' }: Props) {
     const [currentItemIdx, setCurrentItemIDx] = useState(0);
     const [animationClass, setAnimationClass] = useState('');
-    const [animationTimeoutes, setAnimationTimeouts] = useState<number[]>([]);
-    const [autoscrollTimeout, setAutoscrollTimeout] = useState<number>(0);
+    const [animationTimeoutes, setAnimationTimeouts] = useState<ReturnType<typeof setTimeout>[]>([]);
+    const [autoscrollTimeout, setAutoscrollTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
 
     const titleWithMaximumLength = useMemo(() => {
         const itemsWithImages = items.filter(item => item.imageSource !== undefined && item.title);
