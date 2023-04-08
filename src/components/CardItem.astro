@@ -16,7 +16,6 @@ const { label, appearFrom } = Astro.props;
         for (const entry of entries) {
             if (!entry.isIntersecting) return;
             const target = entry.target;
-            console.debug(target);
             target.classList.add('opacity-100', '!translate-x-0');
             observer.unobserve(target);
         }

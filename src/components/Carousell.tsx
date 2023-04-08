@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "preact/hooks";
+import { MutableRef, useEffect, useMemo, useRef, useState } from "preact/hooks";
 import Next from "./icons/Next";
 
 export type CarousellItem = {
@@ -29,8 +29,32 @@ type Props = {
     autoscrollIntervalMs?: number;
     header?: string;
 }
+
+function useIntersectionObserver(element: MutableRef<HTMLDivElement | null>) {
+    const [intersected, setIntersected] = useState(false);
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries, obs) => {
+            for (let entry of entries) {
+                if (entry.isIntersecting) {
+                    setIntersected(true)
+                    obs.disconnect();
+                };
+            }
+        });
+        if (!element.current) return;
+        observer.observe(element.current);
+        return () => observer.disconnect();
+    }, [element]);
+    
+    return intersected;
+}
+
 // TODO: Start the autoscrollTimeout only on the appearance
 export default function Carousell({ items, autoscrollIntervalMs = 3000, header = '' }: Props) {
+    const carousellElement = useRef<HTMLDivElement | null>(null);
+    const isIntersected = useIntersectionObserver(carousellElement);
+    // const isIntersected = carousellElement.current ? useIntersectionObserver(carousellElement.current) : false;
+
     const [currentItemIdx, setCurrentItemIDx] = useState(0);
     const [animationClass, setAnimationClass] = useState('');
     const [animationTimeoutes, setAnimationTimeouts] = useState<ReturnType<typeof setTimeout>[]>([]);
@@ -61,10 +85,13 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
 
     useEffect(() => {
         clearTimeout(autoscrollTimeout);
-        setAutoscrollTimeout(setTimeout(() => {
+        if (!isIntersected) return; 
+        const timeout = setTimeout(() => {
             switchItem(currentItemIdx + 1);
-        }, autoscrollIntervalMs));
-    }, [currentItemIdx]);
+        }, autoscrollIntervalMs);
+        setAutoscrollTimeout(timeout);
+        return () => clearTimeout(timeout);
+    }, [currentItemIdx, isIntersected]);
     
     // useCallback is pretty much useless, because this functions
     // depends on almost every state property
@@ -91,7 +118,7 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
     };
 
     return (
-        <div className="flex justify-center bg-black text-white py-8 md:py-16 px-2 w-full overflow-hidden">
+        <div ref={carousellElement} className="flex justify-center bg-black text-white py-8 md:py-16 px-2 w-full overflow-hidden">
             {/* Preloading the next image */}
             <div className="hidden">
                 <img src={nextImageSource}></img>
