@@ -4,23 +4,22 @@ import Next from "./icons/Next";
 export type CarousellItem = {
     title?: string;
     imageSource?: string;
-    onClick?: () => void;
     className?: string;
 }
 
-const CarousellItemImage = ({ title, imageSource, className, onClick } : CarousellItem) => {
+const CarousellItemImage = ({ title, imageSource, className } : CarousellItem) => {
     if (!title && !imageSource) {
-        return <div onClick={onClick} key="carousell-image" className={`w-full h-52 md:h-96 ${className}`}></div>
+        return <div className={`w-full h-52 md:h-96 ${className}`}></div>
     }
     if (!imageSource) {
         return (
-            <div onClick={onClick} key="carousell-image" className={`w-full h-52 md:h-96 flex items-center text-center p-4 text-2xl md:text-4xl ${className}`}>
+            <div className={`w-full h-52 md:h-96 flex items-center text-center p-4 text-2xl md:text-4xl ${className}`}>
                 {title}
             </div>
         )
     }
     return (
-        <div onClick={onClick} key="carousell-image" className={`w-full h-52 md:h-96 bg-cover bg-center ${className}`} style={{backgroundImage: `url("${imageSource}")`}}></div>
+        <div className={`w-full h-52 md:h-96 bg-cover bg-center ${className}`} style={{backgroundImage: `url("${imageSource}")`}}></div>
     )
 }
 
@@ -133,7 +132,7 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
                         <Next />
                     </button>
                     {/* TODO: Handle swiping */}
-                    <CarousellItemImage onClick={() => switchItem(currentItemIdx + 1)} className={animationClass} key="carousell-item-image" {...currentItem} />
+                    <CarousellItemImage className={animationClass} key="carousell-item-image" {...currentItem} />
                     <button className="hover:scale-[115%] transition-transform" onClick={() => switchItem(currentItemIdx + 1)}>
                         <Next />
                     </button>
