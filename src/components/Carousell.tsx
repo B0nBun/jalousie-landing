@@ -29,6 +29,7 @@ type Props = {
     autoscrollIntervalMs?: number;
     header?: string;
 }
+// Start the autoscrollTimeout only on the appearance
 export default function Carousell({ items, autoscrollIntervalMs = 3000, header = '' }: Props) {
     const [currentItemIdx, setCurrentItemIDx] = useState(0);
     const [animationClass, setAnimationClass] = useState('');
@@ -36,7 +37,7 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
     const [autoscrollTimeout, setAutoscrollTimeout] = useState<number>(0);
 
     const titleWithMaximumLength = useMemo(() => {
-        const itemsWithImages = items.filter(item => item.imageSource !== undefined);
+        const itemsWithImages = items.filter(item => item.imageSource !== undefined && item.title);
         let withMaxLength = '';
         for (let { title } of itemsWithImages) {
             if (title.length > withMaxLength.length) {
