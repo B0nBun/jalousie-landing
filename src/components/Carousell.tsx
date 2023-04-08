@@ -62,7 +62,7 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
         const itemsWithImages = items.filter(item => item.imageSource !== undefined && item.title);
         let withMaxLength = '';
         for (let { title } of itemsWithImages) {
-            if (title.length > withMaxLength.length) {
+            if (title && title.length > withMaxLength.length) {
                 withMaxLength = title;
             }
         }
@@ -70,19 +70,19 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
     }, [items]);
     
     const mod = currentItemIdx % items.length;
-    const currentItem = items[mod < 0 ? items.length + mod : mod];
+    const currentItem = items[mod < 0 ? items.length + mod : mod]!;
     const circles = items.map(item => ({
         selected: item === currentItem
     }));
 
     const nextImageSource = useMemo(() => {
         const mod = (currentItemIdx + 1) % items.length;
-        const nextItem = items[mod < 0 ? items.length + mod : mod];
+        const nextItem = items[mod < 0 ? items.length + mod : mod]!;
         return nextItem.imageSource;
     }, [items, currentItemIdx]);
 
     useEffect(() => {
-        clearTimeout(autoscrollTimeout);
+        clearTimeout(autoscrollTimeout || 0);
         if (!isIntersected) return; 
         const timeout = setTimeout(() => {
             switchItem(currentItemIdx + 1);

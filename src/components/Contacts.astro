@@ -25,7 +25,7 @@ const email = "kirill003@yandex.ru";
 <!-- TODO: Color change on hover -->
 <div id="contacts" class="flex flex-col gap-3 items-start">
     <ContactItem href={`https://t.me/${telegramHandle}`} label={`@${telegramHandle}`}><Telegram/></ContactItem>
-    <ContactItem href={`tel:${phone}`} label={formatPhone(phone)}><Phone/></ContactItem>
-    <ContactItem href={`https://wa.me/${whatsappPhone}`} label={formatPhone(whatsappPhone)}><WhatsApp/></ContactItem>
+    <ContactItem href={`tel:${phone}`} label={formatPhone(phone) || ''}><Phone/></ContactItem>
+    <ContactItem href={`https://wa.me/${whatsappPhone}`} label={formatPhone(whatsappPhone) || ''}><WhatsApp/></ContactItem>
     <ContactItem href={`mailto:${email}`} label={email}><Email/></ContactItem>
 </div>
