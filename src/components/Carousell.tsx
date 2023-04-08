@@ -191,7 +191,6 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
                     <button className="-scale-x-100 hover:-scale-x-[115%] hover:scale-y-[115%] transition-transform" onClick={() => switchItem(currentItemIdx - 1)}>
                         <Next />
                     </button>
-                    {/* TODO: Handle swiping */}
                     <CarousellItemImage className={animationClass} key="carousell-item-image" {...currentItem} />
                     <button className="hover:scale-[115%] transition-transform" onClick={() => switchItem(currentItemIdx + 1)}>
                         <Next />
