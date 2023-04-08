@@ -104,13 +104,12 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
                     ))}
                 </div>
                 <div className="flex w-full flex-row items-center gap-2 md:gap-8">
-                    {/* TODO: Animate buttons */}
-                    <button className="-scale-x-100" onClick={() => switchItem(currentItemIdx - 1)}>
+                    <button className="-scale-x-100 hover:-scale-x-[115%] hover:scale-y-[115%] transition-transform" onClick={() => switchItem(currentItemIdx - 1)}>
                         <Next />
                     </button>
                     {/* TODO: Handle swiping */}
                     <CarousellItemImage onClick={() => switchItem(currentItemIdx + 1)} className={animationClass} key="carousell-item-image" {...currentItem} />
-                    <button onClick={() => switchItem(currentItemIdx + 1)}>
+                    <button className="hover:scale-[115%] transition-transform" onClick={() => switchItem(currentItemIdx + 1)}>
                         <Next />
                     </button>
                 </div>
