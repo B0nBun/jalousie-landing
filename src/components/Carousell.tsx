@@ -49,11 +49,9 @@ function useIntersectionObserver(element: MutableRef<HTMLDivElement | null>) {
     return intersected;
 }
 
-// TODO: Start the autoscrollTimeout only on the appearance
 export default function Carousell({ items, autoscrollIntervalMs = 3000, header = '' }: Props) {
     const carousellElement = useRef<HTMLDivElement | null>(null);
     const isIntersected = useIntersectionObserver(carousellElement);
-    // const isIntersected = carousellElement.current ? useIntersectionObserver(carousellElement.current) : false;
 
     const [currentItemIdx, setCurrentItemIDx] = useState(0);
     const [animationClass, setAnimationClass] = useState('');
