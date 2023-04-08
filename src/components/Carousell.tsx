@@ -79,8 +79,9 @@ function useSwipe(callback: (deltaCoords: Coordinates) => void) {
     }, [setStartCoordinates])
     
     const onTouchEnd = useCallback((event: TouchEvent) => {
-        if (event.touches.length === 0) return;
-        const touch = event.touches[0]!;
+        if (event.changedTouches.length === 0) return;
+        const touch = event.changedTouches[0]!;
+        console.debug(touch);
         if (startCoordinates === null) return;
         const x = touch.clientX;
         const y = touch.clientY;
