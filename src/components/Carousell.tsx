@@ -1,4 +1,4 @@
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useMemo, useState } from "preact/hooks";
 import Next from "./icons/Next";
 
 export type CarousellItem = {
@@ -10,30 +10,42 @@ export type CarousellItem = {
 
 const CarousellItemImage = ({ title, imageSource, className, onClick } : CarousellItem) => {
     if (!title && !imageSource) {
-        return <div onClick={onClick} key="carousell-image" className={`w-full h-96 ${className}`}></div>
+        return <div onClick={onClick} key="carousell-image" className={`w-full h-52 md:h-96 ${className}`}></div>
     }
     if (!imageSource) {
         return (
-            <div onClick={onClick} key="carousell-image" className={`w-full h-96 flex items-center text-center p-4 text-2xl md:text-4xl ${className}`}>
+            <div onClick={onClick} key="carousell-image" className={`w-full h-52 md:h-96 flex items-center text-center p-4 text-2xl md:text-4xl ${className}`}>
                 {title}
             </div>
         )
     }
     return (
-        <div onClick={onClick} key="carousell-image" className={`w-full h-96 bg-cover bg-center ${className}`} style={{backgroundImage: `url("${imageSource}")`}}></div>
+        <div onClick={onClick} key="carousell-image" className={`w-full h-52 md:h-96 bg-cover bg-center ${className}`} style={{backgroundImage: `url("${imageSource}")`}}></div>
     )
 }
 
 type Props = {
-    items: CarousellItem[],
+    items: CarousellItem[];
     autoscrollIntervalMs?: number;
+    header?: string;
 }
-export default function Carousell({ items, autoscrollIntervalMs = 3000 }: Props) {
+export default function Carousell({ items, autoscrollIntervalMs = 3000, header = '' }: Props) {
     const [currentItemIdx, setCurrentItemIDx] = useState(0);
     const [animationClass, setAnimationClass] = useState('');
     const [animationTimeoutes, setAnimationTimeouts] = useState<number[]>([]);
     const [autoscrollTimeout, setAutoscrollTimeout] = useState<number>(0);
 
+    const titleWithMaximumLength = useMemo(() => {
+        const itemsWithImages = items.filter(item => item.imageSource !== undefined);
+        let withMaxLength = '';
+        for (let { title } of itemsWithImages) {
+            if (title.length > withMaxLength.length) {
+                withMaxLength = title;
+            }
+        }
+        return withMaxLength;
+    }, []);
+    
     const mod = (currentItemIdx % items.length)
     const currentItem = items[mod < 0 ? items.length + mod : mod];
     const circles = items.map(item => ({
@@ -74,6 +86,7 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000 }: Props)
     return (
         <div className="flex justify-center bg-black text-white py-8 md:py-16 px-2 w-full overflow-hidden">
             <div className="flex flex-col items-center gap-4 mx-auto max-w-3xl">
+                <h2 class="text-center text-2xl lg:text-3xl font-light">{header}</h2>
                 <div className="flex flex-row gap-3">
                     {circles.map((circle, idx) => (
                         <button key={idx} onClick={() => switchItem(idx)} className={`w-3 h-3 rounded-full bg-white ${circle.selected ? '' : 'opacity-50'} transition-opacity duration-200`}></button>
@@ -89,8 +102,15 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000 }: Props)
                         <Next />
                     </button>
                 </div>
-                <div className={`w-full text-center text-xl md:text-2xl h-20 md:h-24 duration-200 ${animationClass}`} key="carousell-item-title">
-                    {currentItem.imageSource ? currentItem.title || '' : ''}
+                <div className={`relative w-full text-center text-xl md:text-2xl duration-200 ${animationClass}`} key="carousell-item-title">
+                    {/* 
+                        The invisible block is needed to make the height of the container big enough for any title,
+                        so that it doesn't change it's size if the height of the title changes
+                    */}
+                    <span class="invisible">{titleWithMaximumLength}</span>
+                    <span class="absolute top-0 left-1/2 -translate-x-1/2 text-center w-full">
+                        {currentItem.imageSource ? currentItem.title || '' : ''}
+                    </span>
                 </div>
             </div>
         </div>

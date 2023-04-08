@@ -5,11 +5,10 @@ import Hero from '../components/Hero.astro';
 import Cards from '../components/Cards.astro';
 import Contacts from '../components/Contacts.astro';
 
-// TODO: Mobile layout
 // TODO: focus стили для нормального управления tab-ами
 // TODO: screen-reader friendly
 // TODO: Вставить реальные картинки
-const items: CarousellItem[] = [
+const firstCollection: CarousellItem[] = [
 	{
 		imageSource: '/kt.jpg',
 		title: 'Декоративный защитный короб с направляющими создают единую с окном дизайн-конструкцию'
@@ -21,13 +20,38 @@ const items: CarousellItem[] = [
 		title: "Это еще одна карточка, но в этот раз без картинки, а всего лишь с текстом"
 	},
 ]
+const secondCollection: CarousellItem[] = [
+	// {
+	// 	title: "Это еще одна карточка, но в этот раз без картинки, а всего лишь с текстом"
+	// },
+	// {
+	// 	title: "Это еще одна карточка, но в этот раз без картинки, а всего лишь с текстом"
+	// },
+	{
+		imageSource: '/kt.jpg',
+		title: 'Декоративный защитный короб с направляющими создают единую с окном дизайн-конструкцию'
+	},
+];
 ---
 
 <Layout title="Современные Солнцезащитные Системы">
 	<main class="w-screen min-h-screen flex flex-col gap-20 justify-center items-center pb-20">
 		<Hero />
 		<Cards />
-		<Carousell items={items} autoscrollIntervalMs={7500} client:load></Carousell>
+		<div class="flex flex-col w-full">
+			<Carousell
+				items={firstCollection}
+				autoscrollIntervalMs={7500}
+				header="Горизонтальные жалюзи кассетного типа для пластиковых окон «Изотра»"
+				client:load
+			></Carousell>
+			<Carousell
+				items={secondCollection}
+				autoscrollIntervalMs={7500}
+				header="Рулонные шторы кассетного типа «УНИ 2»"
+				client:load
+			></Carousell>
+		</div>
 		<Contacts />
 	</main>
 </Layout>
