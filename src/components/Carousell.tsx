@@ -52,23 +52,6 @@ type Coordinates = { x: number, y: number }
 function useSwipe(callback: (deltaCoords: Coordinates) => void) {
     const [startCoordinates, setStartCoordinates] = useState<Coordinates | null>(null);
 
-    const onMouseStart = useCallback((event: MouseEvent) => {
-        setStartCoordinates({
-            x: event.clientX,
-            y: event.clientY
-        });
-    }, [setStartCoordinates]);
-    
-    const onMouseEnd = useCallback((event: MouseEvent) => {
-        if (startCoordinates === null) return;
-        const x = event.clientX;
-        const y = event.clientY;
-        callback({
-            x: x - startCoordinates.x,
-            y: y - startCoordinates.y
-        });
-    }, [startCoordinates])
-    
     const onTouchStart = useCallback((event: TouchEvent) => {
         if (event.touches.length === 0) return;
         const touch = event.touches[0]!;
@@ -91,9 +74,6 @@ function useSwipe(callback: (deltaCoords: Coordinates) => void) {
     }, [startCoordinates]);
     
     return {
-        onMouseDown: onMouseStart,
-        onMouseUp: onMouseEnd,
-        onMouseLeave: onMouseEnd,
         onTouchStart,
         onTouchEnd,
     };
