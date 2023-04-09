@@ -39,6 +39,8 @@ function useIntersectionObserver(element: MutableRef<HTMLDivElement | null>) {
                     obs.disconnect();
                 };
             }
+        }, {
+            threshold: .8
         });
         if (!element.current) return;
         observer.observe(element.current);
