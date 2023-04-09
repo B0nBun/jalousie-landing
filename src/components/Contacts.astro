@@ -22,9 +22,12 @@ const whatsappPhone = phone;
 const email = "kirill003@yandex.ru";
 ---
 
-<div id="contacts" class="flex flex-col gap-3 items-start">
-    <ContactItem href={`https://t.me/${telegramHandle}`} label={`@${telegramHandle}`}><Telegram/></ContactItem>
-    <ContactItem href={`tel:${phone}`} label={formatPhone(phone) || ''}><Phone/></ContactItem>
-    <ContactItem href={`https://wa.me/${whatsappPhone}`} label={formatPhone(whatsappPhone) || ''}><WhatsApp/></ContactItem>
-    <ContactItem href={`mailto:${email}`} label={email}><Email/></ContactItem>
+<div id="contacts" class="flex flex-col gap-8 items-center">
+    <h2 class="px-4 text-2xl lg:text-3xl text-center">Звоните, пишите, заказывайте:</h2>
+    <div class="flex flex-col gap-3 items-start">
+        <ContactItem href={`https://t.me/${telegramHandle}`} label={`@${telegramHandle}`}><Telegram/></ContactItem>
+        <ContactItem href={`tel:${phone}`} label={formatPhone(phone) || ''}><Phone/></ContactItem>
+        <ContactItem href={`https://wa.me/${whatsappPhone}`} label={formatPhone(whatsappPhone) || ''}><WhatsApp/></ContactItem>
+        <ContactItem href={`mailto:${email}`} label={email}><Email/></ContactItem>
+    </div>
 </div>
