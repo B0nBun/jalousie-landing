@@ -1,5 +1,7 @@
-import { MutableRef, useEffect, useMemo, useRef, useState, useCallback } from "preact/hooks";
-import Next from "./icons/Next";
+import { useEffect, useMemo, useRef, useState } from "preact/hooks";
+import Next from "../icons/Next";
+import useIntersectionObserver from "./use-intersection-observer";
+import useSwipe from "./use-swipe";
 
 export type CarousellItem = {
     title?: string;
@@ -27,58 +29,6 @@ type Props = {
     items: CarousellItem[];
     autoscrollIntervalMs?: number;
     header?: string;
-}
-
-function useIntersectionObserver(element: MutableRef<HTMLDivElement | null>) {
-    const [intersected, setIntersected] = useState(false);
-    useEffect(() => {
-        const observer = new IntersectionObserver((entries, obs) => {
-            for (let entry of entries) {
-                if (entry.isIntersecting) {
-                    setIntersected(true)
-                    obs.disconnect();
-                };
-            }
-        }, {
-            threshold: .8
-        });
-        if (!element.current) return;
-        observer.observe(element.current);
-        return () => observer.disconnect();
-    }, [element]);
-    
-    return intersected;
-}
-
-type Coordinates = { x: number, y: number }
-function useSwipe(callback: (deltaCoords: Coordinates) => void) {
-    const [startCoordinates, setStartCoordinates] = useState<Coordinates | null>(null);
-
-    const onTouchStart = useCallback((event: TouchEvent) => {
-        if (event.touches.length === 0) return;
-        const touch = event.touches[0]!;
-        setStartCoordinates({
-            x: touch.clientX,
-            y: touch.clientY
-        });
-    }, [setStartCoordinates])
-    
-    const onTouchEnd = useCallback((event: TouchEvent) => {
-        if (event.changedTouches.length === 0) return;
-        const touch = event.changedTouches[0]!;
-        if (startCoordinates === null) return;
-        const x = touch.clientX;
-        const y = touch.clientY;
-        callback({
-            x: x - startCoordinates.x,
-            y: y - startCoordinates.y
-        });
-    }, [startCoordinates]);
-    
-    return {
-        onTouchStart,
-        onTouchEnd,
-    };
 }
 
 export default function Carousell({ items, autoscrollIntervalMs = 3000, header = '' }: Props) {
