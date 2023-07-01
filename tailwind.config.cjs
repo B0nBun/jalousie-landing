@@ -9,8 +9,8 @@ module.exports = {
 		},
 		extend: {
 			animation: {
-				"carousell-in": 'carousell-in 200ms ease-in-out forwards',
-				"carousell-out": 'carousell-out 200ms ease-in-out forwards',
+				"carousell-in": 'carousell-in 300ms ease-in-out forwards',
+				"carousell-out": 'carousell-out 300ms ease-in-out forwards',
 			},
 			keyframes: {
 				"carousell-in": {

@@ -107,9 +107,9 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
                 if (titleChanges) {
                     setTitleAnimationClass(`animate-carousell-in ${carousellTranslate}`);
                 }
-            }, 210);
+            }, 310);
             setAnimationTimeouts([...animationTimeoutes, timer2]);
-        }, 210);
+        }, 310);
         setAnimationTimeouts([...animationTimeoutes, timer1]);
     };
 
