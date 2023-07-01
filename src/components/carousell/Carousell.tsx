@@ -21,7 +21,7 @@ const CarousellItemImage = ({ title, imageSource, className } : CarousellItem) =
         )
     }
     return (
-        <div role="img" aria-label={"Image with title: " + title} className={`w-full h-52 md:h-96 bg-cover bg-center ${className}`} style={{backgroundImage: `url("${imageSource}")`}}></div>
+        <div role="img" aria-label={"Image with title: " + title} className={`w-full h-52 md:h-96 bg-contain bg-no-repeat bg-center ${className}`} style={{backgroundImage: `url("${imageSource}")`}}></div>
     )
 }
 
@@ -29,6 +29,12 @@ type Props = {
     items: CarousellItem[];
     autoscrollIntervalMs?: number;
     header?: string;
+}
+
+const getItemFromIndex = (items: CarousellItem[], index: number) : CarousellItem => {
+    const mod = index % items.length;
+    const currentItem = items[mod < 0 ? items.length + mod : mod]!;
+    return currentItem;
 }
 
 export default function Carousell({ items, autoscrollIntervalMs = 3000, header = '' }: Props) {
@@ -52,8 +58,8 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
         return withMaxLength;
     }, [items]);
     
-    const mod = currentItemIdx % items.length;
-    const currentItem = items[mod < 0 ? items.length + mod : mod]!;
+    
+    const currentItem = getItemFromIndex(items, currentItemIdx);
     const circles = items.map(item => ({
         selected: item === currentItem
     }));
@@ -87,7 +93,8 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
             carousellTranslate = "[--carousell-translate:-20px]";
         }
 
-        const titleChanges = items[newIndex]!.title !== currentItem.title        
+        const newItem = getItemFromIndex(items, newIndex)
+        const titleChanges = newItem.title !== currentItem.title        
         setImageAnimationClass(`animate-carousell-out ${carousellTranslate}`);
         if (titleChanges) {
             setTitleAnimationClass(`animate-carousell-out ${carousellTranslate}`);
