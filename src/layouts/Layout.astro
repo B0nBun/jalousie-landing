@@ -4,19 +4,31 @@ export interface Props {
 }
 
 const { title } = Astro.props;
+const description = "Описание"
 ---
 
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 	<head>
+		<!-- HTML Meta Tags -->
 		<meta charset="UTF-8" />
-		<meta property="og:title" content="Заголовок">
-		<meta property="og:description" content="Описание">
-		<meta property="og:locale" content="ru_RU">
+		<meta name="description" content={description}>
+		<title>{title}</title>
+
+		<!-- Facebook Meta Tags -->
+		<meta property="og:type" content="website">
+		<meta property="og:title" content={title}>
+		<meta property="og:description" content={description}>
+		<meta property="og:image" content="/og-image.png">
+	  
+		<!-- Twitter Meta Tags -->
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content={title}>
+		<meta name="twitter:description" content={description}>
+		<meta name="twitter:image" content="/og-image.png">
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/png" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
 	</head>
 	<body class="bg-primary">
 		<slot />
