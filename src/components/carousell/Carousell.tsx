@@ -36,7 +36,8 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
     const isIntersected = useIntersectionObserver(carousellElement);
 
     const [currentItemIdx, setCurrentItemIDx] = useState(0);
-    const [animationClass, setAnimationClass] = useState('');
+    const [imageAnimationClass, setImageAnimationClass] = useState('');
+    const [titleAnimationClass, setTitleAnimationClass] = useState('');
     const [animationTimeoutes, setAnimationTimeouts] = useState<ReturnType<typeof setTimeout>[]>([]);
     const [autoscrollTimeout, setAutoscrollTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
 
@@ -85,12 +86,20 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
         if (newIndex < currentItemIdx) {
             carousellTranslate = "[--carousell-translate:-20px]";
         }
-        setAnimationClass(`animate-carousell-out ${carousellTranslate}`);
+
+        const titleChanges = items[newIndex]!.title !== currentItem.title        
+        setImageAnimationClass(`animate-carousell-out ${carousellTranslate}`);
+        if (titleChanges) {
+            setTitleAnimationClass(`animate-carousell-out ${carousellTranslate}`);
+        }
 
         const timer1 = setTimeout(() => {
             setCurrentItemIDx(newIndex);
             const timer2 = setTimeout(() => {
-                setAnimationClass(`animate-carousell-in ${carousellTranslate}`);
+                setImageAnimationClass(`animate-carousell-in ${carousellTranslate}`);
+                if (titleChanges) {
+                    setTitleAnimationClass(`animate-carousell-in ${carousellTranslate}`);
+                }
             }, 210);
             setAnimationTimeouts([...animationTimeoutes, timer2]);
         }, 210);
@@ -123,12 +132,12 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
                     <button className="-scale-x-100 hover:-scale-x-[115%] hover:scale-y-[115%] transition-transform" onClick={() => switchItem(currentItemIdx - 1)}>
                         <Next />
                     </button>
-                    <CarousellItemImage className={animationClass} key="carousell-item-image" {...currentItem} />
+                    <CarousellItemImage className={imageAnimationClass} key="carousell-item-image" {...currentItem} />
                     <button className="hover:scale-[115%] transition-transform" onClick={() => switchItem(currentItemIdx + 1)}>
                         <Next />
                     </button>
                 </div>
-                <div className={`relative w-full text-center text-xl md:text-2xl duration-200 ${animationClass}`} key="carousell-item-title">
+                <div className={`relative w-full text-center text-xl md:text-2xl duration-200 ${titleAnimationClass}`} key="carousell-item-title">
                     {/* 
                         The invisible block is needed to make the height of the container big enough for any title,
                         so that it doesn't change it's size if the height of the title changes
