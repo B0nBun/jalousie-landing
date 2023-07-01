@@ -8,72 +8,87 @@ import Contacts from '../components/Contacts.astro';
 // TODO: focus стили для нормального управления tab-ами
 // TODO: screen-reader friendly
 const firstCollection: CarousellItem[] = [
-	{
-		title: 'Горизонтальные жалюзи кассетного типа для пластиковых окон «Изотра»'
-	},
-	{
-		imageSource: '/izotra-1.jpg',
-		title: 'Фиксация по всей высоте окна, защита от сквозняков и удобное проветривание'
-	},
-	{
-		imageSource: '/izotra-2.jpg',
-		title: 'Монтаж вплотную к окну, дополнительное удобство доступа к ручке'
-	},
-	{
-		imageSource: '/izotra-3.jpg',
-		title: 'Плоский верхний карниз позволяет открывать створку на всю ширину'
-	},
-	{
-		imageSource: '/izotra-4.jpg',
-		title: 'Современная модель горизонтальных жалюзи с удобным управлением цепочкой, защитой от повреждения пластиковых откосов окна'
-	},
+    {
+        title: 'Кассетные жалюзи для пластиковых окон'
+    },
+    {
+        imageSource: '/casset-1.jpg',
+        title: 'Современная модель встроенных горизонтальных жалюзи = удобное управление цепочкой и привлекательный дизайн'
+    },
+    {
+        imageSource: '/casset-1a.jpg',
+        title: 'Современная модель встроенных горизонтальных жалюзи = удобное управление цепочкой и привлекательный дизайн'
+    },
+    {
+        imageSource: '/casset-2.jpg',
+        title: 'Плоский верхний карниз позволяет открывать створку на всю ширину окна и защищает откосы окна от повреждений.'
+    },
+    {
+        imageSource: '/casset-3.jpg',
+        title: ' Монтаж вплотную к окну = комфортное управление ручкой окна и дополнительное свободное место на подоконнике'
+    },
+    {
+        imageSource: '/casset-4.jpg',
+        title: 'Фиксация по всей высоте изделия = защита от сквозняков и удобное проветривание'
+    },
+    {
+        imageSource: '/casset-4a.jpg',
+        title: 'Фиксация по всей высоте изделия = защита от сквозняков и удобное проветривание'
+    },
 ];
 
 const secondCollection: CarousellItem[] = [
-	{
-		title: 'Рулонные шторы кассетного типа «УНИ 2»'
-	},
-	{
-		imageSource: '/uni-1.jpg',
-		title: 'Декоративный защитный короб с направляющими создают единую с окном дизайн-конструкцию'
-	},
-	{
-		imageSource: '/uni-2.jpg',
-		title: 'Декоративный защитный короб с направляющими создают единую с окном дизайн-конструкцию'
-	},
-	{
-		imageSource: '/uni-4.jpg',
-		title: 'Цветовые решения в четырех вариантах'
-	},
-	{
-		imageSource: '/uni-5.jpg',
-	},
-	{
-		imageSource: '/uni-6.jpg',
-	},
-	{
-		imageSource: '/uni-3.jpg',
-		title: 'Огромный выбор тканей'
-	},
+    {
+        title: 'Рулонные шторы кассетного типа'
+    },
+    {
+        imageSource: '/roll-1.jpg',
+        title: 'Декоративный короб с направляющими создает единую с окном дизайн-конструкцию'
+    },
+    {
+        imageSource: '/roll-1a.jpg',
+        title: 'Декоративный короб с направляющими создает единую с окном дизайн-конструкцию'
+    },
+    {
+        imageSource: '/roll-2.jpg',
+        title: 'Направляющие = защита от сквозняков и удобное проветривание'
+    },
+    {
+        imageSource: '/roll-3.jpg',
+        title: 'Декоративный короб = дизайн и защита механизма от пыли'
+    },
+    {
+        imageSource: '/roll-4.jpg',
+        title: 'Модель подходит как для классических рулонных тканей, так и для тканей типа «зебра» («день-ночь»)'
+    },
+    {
+        imageSource: '/roll-5.jpg',
+        title: 'Цветовые решение в нескольких вариантах'
+    },
+    {
+        imageSource: '/roll-5a.jpg',
+        title: 'Цветовые решение в нескольких вариантах'
+    },
 ];
+
 ---
 
 <Layout title="Современные Солнцезащитные Системы">
-	<main class="min-h-screen flex flex-col gap-20 justify-center items-center pb-20">
-		<Hero />
-		<Cards />
-		<div class="flex flex-col w-full">
-			<Carousell
-				items={firstCollection}
-				autoscrollIntervalMs={7500}
-				client:idle
-			></Carousell>
-			<Carousell
-				items={secondCollection}
-				autoscrollIntervalMs={7500}
-				client:idle
-			></Carousell>
-		</div>
-		<Contacts />
-	</main>
+    <main class="min-h-screen flex flex-col gap-20 justify-center items-center pb-20">
+        <Hero />
+        <Cards />
+        <div class="flex flex-col w-full">
+            <Carousell
+                items={firstCollection}
+                autoscrollIntervalMs={7500}
+                client:idle
+            ></Carousell>
+            <Carousell
+                items={secondCollection}
+                autoscrollIntervalMs={7500}
+                client:idle
+            ></Carousell>
+        </div>
+        <Contacts />
+    </main>
 </Layout>
