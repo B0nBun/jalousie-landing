@@ -85,6 +85,7 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
     
     // useCallback is pretty much useless, because this functions
     // depends on almost every state property
+    const fadeTransitionDuration = 500
     const switchItem = async (newIndex: number) => {
         if (currentItemIdx === newIndex) return;
         
@@ -110,9 +111,9 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
                 if (titleChanges) {
                     setTitleAnimationClass(`animate-carousell-in ${carousellTranslate}`);
                 }
-            }, 310);
+            }, fadeTransitionDuration + 10);
             setAnimationTimeouts([...animationTimeoutes, timer2]);
-        }, 310);
+        }, fadeTransitionDuration + 10);
         setAnimationTimeouts([...animationTimeoutes, timer1]);
     };
 
