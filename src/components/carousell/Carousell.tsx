@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "preact/hooks";
+import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks";
 import Next from "../icons/Next";
 import useIntersectionObserver from "./use-intersection-observer";
 import useSwipe from "./use-swipe";
@@ -7,9 +7,10 @@ export type CarousellItem = {
     title?: string;
     imageSource?: string;
     className?: string;
+    onImageClick?: () => unknown
 }
 
-const CarousellItemImage = ({ title, imageSource, className } : CarousellItem) => {
+const CarousellItemImage = ({ title, imageSource, className, onImageClick } : CarousellItem) => {
     if (!title && !imageSource) {
         return <div className={`w-full h-52 md:h-96 ${className}`}></div>
     }
@@ -21,7 +22,9 @@ const CarousellItemImage = ({ title, imageSource, className } : CarousellItem) =
         )
     }
     return (
-        <div role="img" aria-label={"Image with title: " + title} className={`w-full h-52 md:h-96 bg-contain bg-no-repeat bg-center ${className}`} style={{backgroundImage: `url("${imageSource}")`}}></div>
+        <div onClick={onImageClick} role="img" aria-label={"Image with title: " + title} className={`w-full h-52 md:h-96 bg-contain bg-no-repeat bg-center cursor-pointer ${className}`} style={{
+            backgroundImage: `url("${imageSource}")`
+        }}></div>
     )
 }
 
@@ -122,8 +125,39 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
         }
     });
 
+    const [modalItem, setModalItem] = useState<CarousellItem | undefined>(undefined);
+    const [modalOpacity, setModalOpacity] = useState(0);
+    
+    const onImageClick = useCallback(() => {
+        if (!currentItem.imageSource) return;
+        setModalItem(currentItem);
+        setModalOpacity(1);
+    }, [currentItem, setModalOpacity, setModalItem])
+    
+    const backdropTransitionDuration = 500
+    const onBackdropClick = useCallback(() => {
+        setModalOpacity(0);
+        setTimeout(() => {
+            setModalItem(undefined);
+        }, backdropTransitionDuration + 20);
+    }, [setModalOpacity, setModalItem])
+
     return (
         <div ref={carousellElement} className="flex justify-center bg-black text-white py-8 md:py-16 px-2 w-full overflow-hidden">
+            {/* Modal */}
+            <div
+                class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex flex-col gap-2 items-center justify-center z-10 transition-opacity cursor-pointer"
+                style={{
+                    pointerEvents: modalOpacity !== 0 ? 'all' : 'none',
+                    opacity: modalOpacity,
+                    transitionDuration: `${backdropTransitionDuration}ms`,
+                }}
+                onClick={onBackdropClick}
+            >
+                <img onClick={e => e.stopPropagation()} src={modalItem?.imageSource} class="max-h-[80vh] max-w-[80vw] cursor-default"></img>
+                <p class="text-xl lg:text-2xl p-2 text-center">{modalItem?.title}</p>
+            </div>
+            
             {/* Preloading the next image */}
             <div className="hidden">
                 <img src={nextImageSource}></img>
@@ -139,7 +173,7 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
                     <button className="-scale-x-100 hover:-scale-x-[115%] hover:scale-y-[115%] transition-transform" onClick={() => switchItem(currentItemIdx - 1)}>
                         <Next />
                     </button>
-                    <CarousellItemImage className={imageAnimationClass} key="carousell-item-image" {...currentItem} />
+                    <CarousellItemImage onImageClick={onImageClick} className={imageAnimationClass} key="carousell-item-image" {...currentItem} />
                     <button className="hover:scale-[115%] transition-transform" onClick={() => switchItem(currentItemIdx + 1)}>
                         <Next />
                     </button>
