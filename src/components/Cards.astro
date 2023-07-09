@@ -1,5 +1,6 @@
 ---
 import CardItem from "./CardItem.astro";
+import Clock from './icons/Clock.astro';
 import Handshake from "./icons/Handshake.astro";
 import Jalousie from "./icons/Jalousie.astro";
 import Like from "./icons/Like.astro";
@@ -7,7 +8,11 @@ import Tie from "./icons/Tie.astro";
 
 ---
 
-<div class="grid grid-cols-1 grid-rows-4 md:grid-cols-2 md:grid-rows-2 gap-x-36 gap-y-20">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-36 gap-y-20">
+    <!-- <h3 class="text-center text-3xl md:col-span-2"></h3> -->
+    <div class="col-span-1 md:col-span-2">
+        <CardItem appearFrom="top" label="12 лет на рынке"><Clock /></CardItem>
+    </div>
     <CardItem appearFrom="left" label="Профессиональное решение <br/> в солнцезащите"><Tie/></CardItem>
     <CardItem appearFrom="right" label="Индивидуальный подход"><Handshake/></CardItem>
     <CardItem appearFrom="left" label="Современный декор вашего <br/> окна"><Jalousie/></CardItem>

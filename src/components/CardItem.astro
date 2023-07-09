@@ -1,10 +1,16 @@
 ---
 interface Props {
     label: string;
-    appearFrom: 'right' | 'left';
+    appearFrom: 'right' | 'left' | 'top';
 }
 
 const { label, appearFrom } = Astro.props;
+
+const classForAppearanceTransition = {
+    right: 'translate-x-5',
+    left: '-translate-x-5',
+    top: '-translate-y-5'
+}[appearFrom];
 ---
 
 <script>
@@ -16,7 +22,7 @@ const { label, appearFrom } = Astro.props;
         for (const entry of entries) {
             if (!entry.isIntersecting) continue;
             const target = entry.target;
-            target.classList.add('opacity-100', '!translate-x-0');
+            target.classList.add('opacity-100', '!translate-x-0', '!translate-y-0');
             observer.unobserve(target);
         }
     };
@@ -28,7 +34,7 @@ const { label, appearFrom } = Astro.props;
     }
 </script>
 
-<div class={`flex flex-col items-center gap-6 card-item opacity-0 ${appearFrom === 'right' ? 'translate-x-5' : '-translate-x-5'} transition-all duration-500`}>
+<div class={`card-item flex flex-col items-center gap-6 opacity-0 ${classForAppearanceTransition} transition-all duration-500`}>
     <slot/>
     <span set:html={label} class="text-xl lg:text-2xl text-center" />
 </div>
