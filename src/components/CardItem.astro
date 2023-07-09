@@ -14,7 +14,7 @@ const { label, appearFrom } = Astro.props;
     };
     const callback: IntersectionObserverCallback = (entries, observer) => {
         for (const entry of entries) {
-            if (!entry.isIntersecting) return;
+            if (!entry.isIntersecting) continue;
             const target = entry.target;
             target.classList.add('opacity-100', '!translate-x-0');
             observer.unobserve(target);
