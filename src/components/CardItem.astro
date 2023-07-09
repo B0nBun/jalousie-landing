@@ -38,7 +38,7 @@ const classForAppearanceTransition = {
         const element = elements[i]!;
         if (typeof element.scrollIntoView !== 'undefined') {
             // This doesn't make any sense in a vacuum, but when it comes to actual page layout
-            // scrolling the element itself into view basically scrolls the view down enough
+            // scrolling the element itself into the start of the view basically scrolls the view down enough
             // to make it seem like it goes to the next card
             element.addEventListener('click', () => {
                 element.scrollIntoView({
