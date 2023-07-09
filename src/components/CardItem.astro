@@ -29,8 +29,24 @@ const classForAppearanceTransition = {
     const observer = new IntersectionObserver(callback, options);
 
     const elements = document.querySelectorAll('.card-item');
+
     for (const element of elements) {
         observer.observe(element);
+    }
+
+    for (let i = 0; i < elements.length; i ++) {
+        const element = elements[i]!;
+        if (typeof element.scrollIntoView !== 'undefined') {
+            // This doesn't make any sense in a vacuum, but when it comes to actual page layout
+            // scrolling the element itself into view basically scrolls the view down enough
+            // to make it seem like it goes to the next card
+            element.addEventListener('click', () => {
+                element.scrollIntoView({
+                    block: 'start',
+                    behavior: 'smooth'
+                })
+            })
+        }
     }
 </script>
 
