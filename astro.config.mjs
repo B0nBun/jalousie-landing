@@ -5,6 +5,5 @@ import preact from "@astrojs/preact";
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), preact()],
-  site: "https://b0nbun.github.io",
-  base: "/jalousie-landing"
+  site: "https://xn----7sbrffndt3m.xn--p1ai"
 });
