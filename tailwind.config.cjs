@@ -4,8 +4,8 @@ module.exports = {
 	theme: {
 		colors: {
 			black: '#212121',
-			white: '#ffffff',
-			primary: '#F9E547'
+			white: '#F0EEE9',
+			primary: '#f49114'
 		},
 		extend: {
 			animation: {

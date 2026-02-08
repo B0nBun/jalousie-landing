@@ -16,14 +16,14 @@ const formatPhone = (phone: string) => {
     return null;
 }
 
-const telegramHandle = "KirGus330";
+const telegramHandle = "Jaluzink";
 const phone = "+79953301976";
 const whatsappPhone = phone;
 const email = "kirill003@yandex.ru";
 ---
 
 <div id="contacts" class="flex flex-col gap-8 items-center">
-    <h2 class="px-4 text-2xl lg:text-3xl text-center">Звоните, пишите, заказывайте:</h2>
+    <h2 class="px-4 text-2xl lg:text-3xl text-center text-primary">Звоните, пишите, заказывайте:</h2>
     <div class="flex flex-col gap-3 items-start">
         <ContactItem href={`https://t.me/${telegramHandle}`} label={`@${telegramHandle}`}><Telegram/></ContactItem>
         <ContactItem href={`tel:${phone}`} label={formatPhone(phone) || ''}><Phone/></ContactItem>
