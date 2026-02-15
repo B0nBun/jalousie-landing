@@ -9,12 +9,38 @@ import Tie from "./icons/Tie.astro";
 ---
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-36 gap-y-20">
-    <!-- <h3 class="text-center text-3xl md:col-span-2"></h3> -->
     <div class="col-span-1 md:col-span-2">
-        <CardItem appearFrom="top" label="15 лет на рынке"><Clock /></CardItem>
+        <CardItem
+            appearFrom="top"
+            label="15 лет на рынке"
+            label="<span id='current-year'>15 лет</span> на рынке"
+        ><Clock /></CardItem>
     </div>
     <CardItem appearFrom="left" label="Профессиональное решение <br/> в солнцезащите"><Tie/></CardItem>
     <CardItem appearFrom="right" label="Индивидуальный подход"><Handshake/></CardItem>
     <CardItem appearFrom="left" label="Современный декор вашего <br/> окна"><Jalousie/></CardItem>
     <CardItem appearFrom="right" label="Удобство и <br/> функциональность"><Like/></CardItem>
 </div>
+<script is:inline>
+    document.querySelectorAll("#current-year").forEach(element => {
+        const year = new Date().getFullYear();
+        const passed = Math.max(year - 2021, 15);
+        let word = "лет";
+        const lastDigit = passed.toString().at(-1);
+        if (passed < 10 || passed > 20) {
+            word = {
+                0: "лет",
+                1: "год",
+                2: "года",
+                3: "года",
+                4: "года",
+                5: "лет",
+                6: "лет",
+                7: "лет",
+                8: "лет",
+                9: "лет",
+            }[lastDigit] ?? "лет";
+        }
+        element.textContent = `${passed} ${word}`;
+    })
+</script>
