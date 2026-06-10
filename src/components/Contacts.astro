@@ -4,6 +4,7 @@ import Email from "./icons/Email.astro";
 import Phone from "./icons/Phone.astro";
 import Telegram from "./icons/Telegram.astro";
 import WhatsApp from "./icons/WhatsApp.astro";
+import Max from "./icons/Max.astro";
 
 // Modified function from: https://stackoverflow.com/a/8358141/19729620
 const formatPhone = (phone: string) => {
@@ -20,14 +21,16 @@ const telegramHandle = "Jaluzink";
 const phone = "+79953301976";
 const whatsappPhone = phone;
 const email = "kirill003@yandex.ru";
+const maxlink = "https://max.ru/u/f9LHodD0cOKmz4oqRUsE1e6_ObF1SK4bzyxjQNOBvqHoYIMm8YzF59OxMB8";
 ---
 
 <div id="contacts" class="flex flex-col gap-8 items-center">
     <h2 class="px-4 text-2xl lg:text-3xl text-center text-primary">Звоните, пишите, заказывайте:</h2>
     <div class="flex flex-col gap-3 items-start">
-        <ContactItem href={`https://t.me/${telegramHandle}`} label={`@${telegramHandle}`}><Telegram/></ContactItem>
         <ContactItem href={`tel:${phone}`} label={formatPhone(phone) || ''}><Phone/></ContactItem>
-        <ContactItem href={`https://wa.me/${whatsappPhone}`} label={formatPhone(whatsappPhone) || ''}><WhatsApp/></ContactItem>
         <ContactItem href={`mailto:${email}`} label={email}><Email/></ContactItem>
+        <ContactItem href={maxlink} label={formatPhone(phone)}><Max /></ContactItem>
+        <ContactItem href={`https://wa.me/${whatsappPhone}`} label={formatPhone(whatsappPhone) || ''}><WhatsApp/></ContactItem>
+        <ContactItem href={`https://t.me/${telegramHandle}`} label={`@${telegramHandle}`}><Telegram/></ContactItem>
     </div>
 </div>

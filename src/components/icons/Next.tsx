@@ -1,3 +1,5 @@
 export default function Next() {
-    return <img className="w-8 h-8 md:w-12 md:h-12" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvUlEQVR4nO3aMQrCQBQG4ecJDaKk0LNbJCiI3kBhJCqbFPEA+3a+KqT72amWjZAkSdUDDsADuABdZAZsgDuzJ9BHZsBtMTj/aGD3G9nU6P3K6BdwiqxwdOFJp4N5F+adDuZdmHc6mHdh3ulg3oV5pwP0fy4RutZGj9HY4CEyoqWk+d5rr92HHSMbHIsnWz3MGDOuHmaMGVcPM8aMq4cZY8bVA7ZNPWoBxmbGToBrM2MXSQ/Aefr+/JQkSYrZG+C2XsRB1Yr5AAAAAElFTkSuQmCC"/>;
+    return <svg class="w-8 h-8 md:w-12 md:h-12" xmlns="http://www.w3.org/2000/svg" fill="#f49114" height="800px" width="800px" version="1.1" id="XMLID_287_" viewBox="0 0 24 24"><g id="next"><g>
+        <polygon points="6.8,23.7 5.4,22.3 15.7,12 5.4,1.7 6.8,0.3 18.5,12   "/>
+    </g></g></svg>
 }

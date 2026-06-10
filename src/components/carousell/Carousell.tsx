@@ -144,7 +144,7 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
     }, [setModalOpacity, setModalItem])
 
     return (
-        <div ref={carousellElement} className="flex justify-center bg-black text-white py-8 md:py-16 px-2 w-full overflow-hidden">
+        <div ref={carousellElement} className="flex justify-center bg-white text-primary py-8 md:py-16 px-2 w-full overflow-hidden">
             {/* Modal */}
             <div
                 class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex flex-col gap-2 items-center justify-center z-10 transition-opacity cursor-pointer"
@@ -167,7 +167,7 @@ export default function Carousell({ items, autoscrollIntervalMs = 3000, header =
                 <h2 class="text-center text-2xl lg:text-3xl font-light">{header}</h2>
                 <div className="flex flex-row gap-3">
                     {circles.map((circle, idx) => (
-                        <button key={idx} onClick={() => switchItem(idx)} className={`w-3 h-3 rounded-full bg-white ${circle.selected ? '' : 'opacity-50'} transition-opacity duration-200`}></button>
+                        <button key={idx} onClick={() => switchItem(idx)} className={`w-3 h-3 rounded-full bg-primary ${circle.selected ? '' : 'opacity-50'} transition-opacity duration-200`}></button>
                     ))}
                 </div>
                 <div {...swipeHandlers} className="flex w-full flex-row items-center gap-2 md:gap-8">
